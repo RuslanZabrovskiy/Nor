@@ -19,15 +19,17 @@
             margin-bottom: 20px;
             text-align: center;
         }
-        #next-phrase-button {
-            font-size: 18px;
+        #next-phrase-button, #copy-phrase-button {
+            font-size: 20px;
             padding: 10px 20px;
             cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div id="phrase-container">Нажмите кнопку для начала!</div>
+    <button id="copy-phrase-button">Копировать текст</button>
     <button id="next-phrase-button">Следующая фраза</button>
 
     <script>
@@ -1126,7 +1128,7 @@
     { "ru": "Ты не наслаждаешься летом.", "no": "Du trives ikke om sommeren." },
     { "ru": "Он не разговаривает с учителем.", "no": "Han prater ikke med læreren." },
     { "ru": "Она не считает до десяти.", "no": "Hun teller ikke til ti." }
-];
+            ];
 
             let currentIndex = -1; // Индекс текущей фразы
             let showRussian = true; // Переменная для отслеживания текущего состояния
@@ -1142,8 +1144,21 @@
                 showRussian = !showRussian;
             }
 
+            // Функция для копирования текста
+            function copyText() {
+                const textToCopy = document.getElementById('phrase-container').innerText;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    alert('Текст скопирован!');
+                }).catch(err => {
+                    alert('Ошибка при копировании текста: ', err);
+                });
+            }
+
             // Обработчик клика по кнопке для отображения следующей фразы
             document.getElementById('next-phrase-button').addEventListener('click', displayNextPhrase);
+
+            // Обработчик клика по кнопке для копирования текста
+            document.getElementById('copy-phrase-button').addEventListener('click', copyText);
 
             // При загрузке страницы отображаем первую русскую фразу
             displayNextPhrase();
@@ -1151,3 +1166,4 @@
     </script>
 </body>
 </html>
+
